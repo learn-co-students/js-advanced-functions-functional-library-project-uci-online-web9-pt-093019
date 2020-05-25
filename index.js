@@ -127,36 +127,38 @@ const fi = (function() {
             returnArry.push(array[i])
             }
         }
-        
+        return returnArry
       }
       else {
-        // [1, [2], [3, [[4]]]]
-        // [1, [2, [3]]]
+        // [1, [2, 3], [[4, 5], 6, [7, [8, 9]]]]
       
         let currentElement = array
         let next = []
+
         while(currentElement || currentElement === 0) {
           console.log(`currentElement = ${currentElement}`)
           console.log(`next in loop = ${next}`)
           // debugger
           if (Array.isArray(currentElement)) {
             for (let i=0; i<currentElement.length; i++) {
-              console.log(`next current for loop = ${currentElement[i]}`)
+              
+              next.unshift(currentElement[i])
+
+              console.log(`currentElement ${i} in for loop = ${currentElement[i]}`)
               console.log(`next in for loop = ${next}`)
-    
-              next.push(currentElement[i])
             }
           }
           else {
             console.log(`element being added to returnArry=${currentElement}`)
             returnArry.push(currentElement)
           }
+
           currentElement = next.shift()
           
-          console.log(`current after next shift=${currentElement}`)
+          console.log(`current after next.shift=${currentElement}`)
         }    
+        return returnArry.reverse()
       }
-      return returnArry
     },
 
     uniq: function (array, isSorted=false, callback) {
@@ -224,5 +226,5 @@ const fi = (function() {
   }
 })()
 
-console.log(fi.flatten([1, [2], [3, [[4]]]]))
+console.log(fi.flatten([1, [2, 3], [[4, 5], 6, [7, [8, 9]]]]))
 console.log(fi.flatten([1, [2], [3, [[4]]]], true))
